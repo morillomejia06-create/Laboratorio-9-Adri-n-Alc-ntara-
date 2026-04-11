@@ -56,7 +56,7 @@ sudo apt update && sudo apt upgrade -y
 # Agregar repositorio de Terraform
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 
-# Agrega terrafor como fuente de instalacion
+# Agrega terraform como fuente de instalacion
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 
 # Instalar Terraform
@@ -66,22 +66,24 @@ sudo apt update && sudo apt install terraform -y
 terraform -v
 
 # Crear carpeta
-sudo mkdir terraform-do
+mkdir terraform-do
 cd terraform-do
 
 # Crear archivo principal
-sudo nano main.tf
-
-# Crear el token en Digital Ocean 
-Digital Ocean, API, Generate new token, Ponerle nombre: token terra, Tiempo de expiración: no expire, Scopes: full access, Generate token 
+nano main.tf
 
 # Crear archivo donde guardar el token 
 Dentro de la misma carpeta creada anteriormente
 sudo nano terraform.tfvars 
 do_token = “TU_TOKEN”
 
+# Crear el token en Digital Ocean 
+Digital Ocean, API, Generate new token, Ponerle nombre: token terra, Tiempo de expiración: no expire, Scopes: full access, Generate token 
+
 # Crear llave ssh  
 Digital ocean, Settings, Security, Add SSH key 
+ssh-keygen, cd .ssh, ls, cat id_ed25519.pub,
+La copiamos en digital ocean, ponemos un nombre, Add SSK key
 
 # Inicializar Terraform
 sudo terraform init
@@ -103,7 +105,7 @@ PRACTICA 3 - INSTALACION DE ANSIBLE
 sudo apt update && sudo apt upgrade -y
 sudo apt install software-properties-common -y
 sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install python3 -y
+sudo apt install -y python3
 sudo apt install ansible -y
 
 # -------- CONFIGURAR CLIENTE LINUX --------- #
@@ -113,6 +115,9 @@ adduser ansible1
 
 # Dar permisos administrador
 sudo usermod -aG sudo ansible1
+
+# Sincronizar la llave ssh con el usurio
+rsync --archive --chown-ansible1:ansible1 ~/.ssh /home/ansible1
 
 # -------- CONFIGURAR CLIENTE WINDOWS --------- #
 
@@ -126,15 +131,12 @@ net localgroup Administrators ansible2 /add
 # Activar WinRM
 winrm quickconfig
 
-# -------- CONFIGURAR SSH SIN CONTRASEÑA --------- #
-
-
-
 # -------- CREAR INVENTARIO DE ANSIBLE --------- #
 
 # Crear carpeta y archivo 
 sudo mkdir /etc/ansible
 sudo nano /etc/ansible/hosts
+Aqui se configura todo para poder hacer ping hacia las dos maquinas clientes
 
 # -------- PROBAR CONEXION --------- #
 
