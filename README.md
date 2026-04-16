@@ -141,6 +141,10 @@ sudo mkdir /etc/ansible
 sudo nano /etc/ansible/hosts
 Aqui se configura todo para poder hacer ping hacia las dos maquinas clientes
 
+# Contenido
+[win]
+win1 ansible_host=IP_WINDOWS
+
 # -------- PROBAR CONEXION --------- #
 
 # Probar Linux
