@@ -131,6 +131,9 @@ net localgroup Administrators ansible2 /add
 # Activar WinRM
 winrm quickconfig
 
+# Permitir conexiones remotas
+Enable-PSRemoting -Force
+
 # -------- CREAR INVENTARIO DE ANSIBLE --------- #
 
 # Crear carpeta y archivo 
